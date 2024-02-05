@@ -5,7 +5,7 @@ import JWT from "jsonwebtoken";
 
 export const registercontroller = async (req, res) => {
   try {
-    const { name, email, dob, password, phoneno, address } = req.body;
+    const { name, email, dob, phoneno, password, address } = req.body;
 
     //Verification
     if (!name) {
@@ -17,11 +17,11 @@ export const registercontroller = async (req, res) => {
     if (!dob) {
       return res.send({ message: "Date of Birth is required!" });
     }
-    if (!password) {
-      return res.send({ message: "password is required!" });
-    }
     if (!phoneno) {
       return res.send({ message: "phoneno is required!" });
+    }
+    if (!password) {
+      return res.send({ message: "password is required!" });
     }
     if (!address) {
       return res.send({ message: "address is required!" });
@@ -47,8 +47,8 @@ export const registercontroller = async (req, res) => {
       name,
       email,
       dob,
-      password: hashed,
       phoneno,
+      password: hashed,
       address,
     }).save();
 
