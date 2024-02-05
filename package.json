@@ -1,7 +1,7 @@
 {
-  "name": "ecommerce-project",
+  "name": "farmers",
   "version": "1.0.0",
-  "description": "Ecommers rest api",
+  "description": "Farmers rest api",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -26,5 +26,14 @@
     "mongoose": "^7.5.3",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Suraj-021/Farmers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Suraj-021/Farmers/issues"
+  },
+  "homepage": "https://github.com/Suraj-021/Farmers#readme"
 }
