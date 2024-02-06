@@ -17,4 +17,9 @@ route.post("/login", Logincontroller);
 // Middleware Method get
 route.get("/test", RequireSignin, isAdmin, testcontroller);
 
+//Protected Routes
+route.get("/user-auth", RequireSignin, (req, res) => {
+  res.status(200).send({ Ok: true });
+});
+
 export default route;
