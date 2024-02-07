@@ -5,7 +5,7 @@ import JWT from "jsonwebtoken";
 
 export const registercontroller = async (req, res) => {
   try {
-    const { name, email, dob, phoneno, password, address } = req.body;
+    const { name, email, dob, phoneno, password, address, question } = req.body;
 
     //Verification
     if (!name) {
@@ -25,6 +25,9 @@ export const registercontroller = async (req, res) => {
     }
     if (!address) {
       return res.send({ message: "address is required!" });
+    }
+    if (!question) {
+      return res.send({ message: "question is required!" });
     }
 
     //Checkuser
@@ -50,6 +53,7 @@ export const registercontroller = async (req, res) => {
       phoneno,
       password: hashed,
       address,
+      question,
     }).save();
 
     res.status(201).send({
@@ -118,6 +122,45 @@ export const Logincontroller = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in Login",
+      error,
+    });
+  }
+};
+
+//forgot-password
+export const ForgotpassController = async (req, res) => {
+  try {
+    const { email, question, newPassword } = req.body;
+    if (!email) {
+      res.status(400).send({ message: "Email is required" });
+    }
+    if (!question) {
+      res.status(400).send({ message: "Security question is required" });
+    }
+    if (!newPassword) {
+      res.status(400).send({ message: "New password is required" });
+    }
+
+    const user = await usermodel.findOne({ email, question });
+    if (!user) {
+      return res.status(401).send({
+        success: false,
+        message: "User not found or incorrect",
+      });
+    }
+
+    const hashed = await hashPassword(newPassword);
+
+    await usermodel.findByIdAndUpdate(user._id, { password: hashed });
+    res.status(200).send({
+      success: true,
+      message: "Password Reset Successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.send({
+      success: false,
+      message: "Internal Server Error",
       error,
     });
   }
